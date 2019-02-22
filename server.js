@@ -102,7 +102,7 @@ app.get('/data', function (req, res) {
     initDb(function(err){});
   }
   if (db) {
-    dbo.collection("lecturas").find({}).toArray(function(err, result) {
+    db.collection("lecturas").find({}).toArray(function(err, result) {
       if (err) throw err;
       console.log(result);
       res.send(JSON.stringify(result));
