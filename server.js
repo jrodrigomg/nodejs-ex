@@ -2,7 +2,8 @@
 var express = require('express'),
     app     = express(),
     morgan  = require('morgan');
-    
+    var bodyParser = require('body-parser');
+    app.use(bodyParser.json()); // support json encoded bodies
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
@@ -94,20 +95,39 @@ app.get('/', function (req, res) {
   }
 });
 
-app.get('/pagecount', function (req, res) {
+app.get('/data', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
     initDb(function(err){});
   }
   if (db) {
-    db.collection('counts').count(function(err, count ){
-      res.send('{ pageCount: ' + count + '}');
+    dbo.collection("lecturas").find({}).toArray(function(err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.send(JSON.stringify(result));
     });
   } else {
-    res.send('{ pageCount: -1 }');
+    res.send('[]');
   }
 });
+
+
+app.post('/api/data', function(req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var col = db.collection('lecturas');
+    // Create a document with request IP and current time of request
+    col.insert(req.body);
+    res.send('{"sucess":1}');
+  }
+  res.send('{"sucess":0}');
+});
+
 
 // error handling
 app.use(function(err, req, res, next){
