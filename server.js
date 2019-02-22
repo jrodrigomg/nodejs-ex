@@ -4,6 +4,7 @@ var express = require('express'),
     morgan  = require('morgan');
     var bodyParser = require('body-parser');
     app.use(bodyParser.json()); // support json encoded bodies
+    app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
