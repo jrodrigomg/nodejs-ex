@@ -113,7 +113,7 @@ app.get('/data', function (req, res) {
 });
 
 
-app.post('/api/data', function(req, res) {
+app.post('data/', function(req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
