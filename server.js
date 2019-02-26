@@ -5,6 +5,7 @@ var express = require('express'),
     var bodyParser = require('body-parser');
     app.use(bodyParser.json()); // support json encoded bodies
     app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+    var dateFormat = require('dateformat');
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
@@ -123,6 +124,7 @@ app.post('/data', function(req, res) {
   if (db) {
     var col = db.collection('lecturas');
     // Create a document with request IP and current time of request
+    req.body.fechahora = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
     col.insert(req.body);
     res.send('{"sucess":1}');
   }
