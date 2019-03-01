@@ -113,9 +113,9 @@ app.get('/data', function (req, res) {
   if (db) {
 
     /*Obtener valores de minimo y maximo para los  */
-    var uv = req.param("uvi").trim();
-    var mq7 = req.param("gasmq7").trim();
-    var mq135 = req.param("gasmq135").trim();
+    var uv = req.param("uvi");
+    var mq7 = req.param("gasmq7");
+    var mq135 = req.param("gasmq135");
     console.log(uv,mq7,mq135);
 
     db.collection("lecturas").find({}).toArray(function(err, result) {
@@ -124,16 +124,13 @@ app.get('/data', function (req, res) {
       result.forEach(function(registro){
         var doPush = true;
         if(uv!==""){
-          doPush = getUVPush(uv,registro);
-          console.log(doPush + "1");
+          doPush = getUVPush(uv.trim(),registro);
         }
         if(mq7!=="" && doPush){
-          doPush = getmq7Push(mq7,registro);
-          console.log(doPush + "2");
+          doPush = getmq7Push(mq7.trim(),registro);
         }
         if(mq135!=="" && doPush){
-          doPush = getmq135Push(mq135,registro);
-          console.log(doPush + "3");
+          doPush = getmq135Push(mq135.trim(),registro);
         }
         if(doPush){
           resultado.push(registro);
@@ -152,29 +149,29 @@ function getmq135Push(uv,registro){
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
-    if(registro.gasmq7 <2){
+    if(registro.gasmq135 <2){
       doPush = false;
     }
   }else if(uv==="010"){ //Solo regulares
-    if(registro.gasmq7 >=1 && registro.gasmq7 <2){
+    if(registro.gasmq135 >=1 && registro.gasmq135 <2){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="011"){//malos y regulares
-    if(registro.gasmq7 >= 1){
+    if(registro.gasmq135 >= 1){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="100"){ //Solo buenos
-    if(registro.gasmq7<1){
+    if(registro.gasmq135<1){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="101"){ //Buenos y malos
-    if(registro.gasmq7 <1 || registro.gasmq7 >=2){
+    if(registro.gasmq135 <1 || registro.gasmq135 >=2){
       doPush = true;
     }else{
       doPush = false;
