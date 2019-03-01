@@ -115,7 +115,7 @@ app.get('/data', function (req, res) {
     /*Obtener valores de minimo y maximo para los  */
     var uv = req.param("uvi");
     var mq7 = req.param("gasmq7");
-    var mq135 = req.param("mq135");
+    var mq135 = req.param("gasmq135");
     console.log(uv,mq7,mq135);
 
     db.collection("lecturas").find({}).toArray(function(err, result) {
