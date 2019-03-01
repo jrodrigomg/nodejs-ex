@@ -146,7 +146,7 @@ app.get('/data', function (req, res) {
       query.fechahora = {"$lte":dto};      
     }
 
-    console.log(JSON.stringify(query))
+    console.log(JSON.stringify(query));
 
     db.collection("lecturas").find(query).toArray(function(err, result) {
       if (err) throw err;
