@@ -113,8 +113,7 @@ app.get('/data', function (req, res) {
   if (db) {
 
     /*Obtener valores de minimo y maximo para los  */
-
-    var uv = req.param("iuv");
+    var uv = req.param("uvi");
     var mq7 = req.param("gasmq7");
     var mq135 = req.param("mq135");
 
