@@ -148,6 +148,7 @@ app.get('/data', function (req, res) {
 
 
 function getmq135Push(uv,registro){
+  doPush = true;
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
@@ -186,6 +187,7 @@ function getmq135Push(uv,registro){
 
 
 function getmq7Push(uv,registro){
+  doPush = true;
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
@@ -224,6 +226,7 @@ function getmq7Push(uv,registro){
 
 
 function getUVPush(uv,registro){
+  doPush = true;
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
