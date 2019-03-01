@@ -118,18 +118,20 @@ app.get('/data', function (req, res) {
     var mq135 = req.param("gasmq135");
     var datefrom = req.param("dateFrom");
     var dateto = req.param("dateTo");
-    var yearf = datefrom.substring(0,3);
-    var monthf = datefrom.substring(4,7);
-    var dayf = datefrom.substring(8);
+    if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
+      var yearf = datefrom.substring(0,3);
+      var monthf = datefrom.substring(4,7);
+      var dayf = datefrom.substring(8);
+      var datef = yearf + "-" + monthf + "-" + dayf;
+      console.log(datef)
+    }
 
-    var yeart = dateto.substring(0,3);
-    var montht = dateto.substring(4,7);
-    var dayt = dateto.substring(8);
-
-    var datef = yearf + "-" + monthf + "-" + dayf;
-    var datet = yeart + "-" + montht + "-" + dayt;
-    console.log(datef)
-
+    if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
+      var yeart = dateto.substring(0,3);
+      var montht = dateto.substring(4,7);
+      var dayt = dateto.substring(8);
+      var datet = yeart + "-" + montht + "-" + dayt;
+    }
     db.collection("lecturas").find({}).toArray(function(err, result) {
       if (err) throw err;
       var resultado = [];
