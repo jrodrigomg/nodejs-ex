@@ -125,12 +125,15 @@ app.get('/data', function (req, res) {
         var doPush = true;
         if(uv!==""){
           doPush = getUVPush(uv,registro);
+          console.log(doPush + "1");
         }
         if(mq7!=="" && doPush){
           doPush = getmq7Push(mq7,registro);
+          console.log(doPush + "2");
         }
         if(mq135!=="" && doPush){
           doPush = getmq135Push(mq135,registro);
+          console.log(doPush + "3");
         }
         if(doPush){
           resultado.push(registro);
