@@ -120,6 +120,7 @@ app.get('/data', function (req, res) {
 
     db.collection("lecturas").find({}).toArray(function(err, result) {
       if (err) throw err;
+      console.log(result);
       var resultado = [];
       result.forEach(function(registro){
         var doPush = true;
