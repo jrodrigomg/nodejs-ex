@@ -123,13 +123,13 @@ app.get('/data', function (req, res) {
       var resultado = [];
       result.forEach(function(registro){
         var doPush = true;
-        if(uv!==""){
+        if(uv && typeof uv !=="undefined" && uv!==""){
           doPush = getUVPush(uv.trim(),registro);
         }
-        if(mq7!=="" && doPush){
+        if(mq7 && typeof mq7 !=="undefined" && mq7!=="" && doPush){
           doPush = getmq7Push(mq7.trim(),registro);
         }
-        if(mq135!=="" && doPush){
+        if(mq135 && typeof mq135 !=="undefined" && mq135!=="" && doPush){
           doPush = getmq135Push(mq135.trim(),registro);
         }
         if(doPush){
