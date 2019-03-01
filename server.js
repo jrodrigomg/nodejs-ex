@@ -116,7 +116,19 @@ app.get('/data', function (req, res) {
     var uv = req.param("uvi");
     var mq7 = req.param("gasmq7");
     var mq135 = req.param("gasmq135");
-    console.log(uv,mq7,mq135);
+    var datefrom = req.param("dateFrom");
+    var dateto = req.param("dateTo");
+    var yearf = datefrom.substring(0,3);
+    var monthf = datefrom.substring(4,7);
+    var dayf = datefrom.substring(8);
+
+    var yeart = dateto.substring(0,3);
+    var montht = dateto.substring(4,7);
+    var dayt = dateto.substring(8);
+
+    var datef = yearf + "-" + monthf + "-" + dayf;
+    var datet = yeart + "-" + montht + "-" + dayt;
+    console.log(datef)
 
     db.collection("lecturas").find({}).toArray(function(err, result) {
       if (err) throw err;
