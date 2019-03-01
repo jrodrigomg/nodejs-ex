@@ -118,12 +118,15 @@ app.get('/data', function (req, res) {
     var mq135 = req.param("gasmq135");
     var datefrom = req.param("dateFrom");
     var dateto = req.param("dateTo");
+    var dfrom;
+    var dto;
+    var query = {};
     if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
       var yearf = datefrom.substring(0,4);
       var monthf = datefrom.substring(4,6);
       var dayf = datefrom.substring(6);
       var datef = yearf + "-" + monthf + "-" + dayf;
-      console.log(datef)
+      dfrom = new Date(datef.toISOString());
     }
 
     if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
@@ -131,8 +134,18 @@ app.get('/data', function (req, res) {
       var montht = dateto.substring(4,6);
       var dayt = dateto.substring(6);
       var datet = yeart + "-" + montht + "-" + dayt;
+      dto = new Date(datet.toISOString());
     }
-    db.collection("lecturas").find({}).toArray(function(err, result) {
+    if(dfrom!="" && dto!=""){
+      query.fechahora = {"$gte":dfrom,"$lte":dto};
+    }else if(dfrom!=""){
+      query.fechahora = {"$gte":dfrom};
+    }else if(dto !=""){
+      query.fechahora = {"$lte":dtos};      
+    }
+
+
+    db.collection("lecturas").find(query).toArray(function(err, result) {
       if (err) throw err;
       var resultado = [];
       result.forEach(function(registro){
