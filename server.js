@@ -111,15 +111,148 @@ app.get('/data', function (req, res) {
     initDb(function(err){});
   }
   if (db) {
+
+    /*Obtener valores de minimo y maximo para los  */
+
+    var uv = req.param("iuv");
+    var mq7 = req.param("gasmq7");
+    var mq135 = req.param("mq135");
+
     db.collection("lecturas").find({}).toArray(function(err, result) {
       if (err) throw err;
-      console.log(result);
-      res.send(JSON.stringify(result));
+      var resultado = [];
+      result.forEach(function(registro){
+        var doPush = true;
+        if(uv!==""){
+          doPush = getUVPush(uv,registro);
+        }
+        if(mq7!=="" && doPush){
+          doPush = getmq7push(mq7,registro);
+        }
+        if(mq135!=="" && doPush){
+          doPush = getmq135Push(mq135,registro);
+        }
+        if(doPush){
+          resultado.push(registro);
+        }
+      });
+      
+      res.send(JSON.stringify(resultado));
     });
   } else {
     res.send('[]');
   }
 });
+
+
+function getmq135Push(uv,registro){
+  if(uv==="000"){ //Ninguno
+    doPush = false;
+  }else if(uv==="001"){ //Solo malos
+    if(registro.gasmq135 <0.6){
+      doPush = false;
+    }
+  }else if(uv==="010"){ //Solo regulares
+    if(registro.gasmq135 >=0.5 && registro.gasmq135 <0.6){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="011"){//Buenos y regulares
+    if(registro.gasmq135 >= 0.5){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="100"){ //Solo buenos
+    if(registro.gasmq135<0.5){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="101"){ //Buenos y malos
+    if(registro.gasmq135 <0.5 || registro.gasmq135 >= 0.6){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="111"){//Incluir todos
+    doPush = true;
+  }
+}
+
+function getmq7Push(uv,registro){
+  if(uv==="000"){ //Ninguno
+    doPush = false;
+  }else if(uv==="001"){ //Solo malos
+    if(registro.gasmq7 <0.6){
+      doPush = false;
+    }
+  }else if(uv==="010"){ //Solo regulares
+    if(registro.gasmq7 >=0.5 && registro.gasmq7 <0.6){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="011"){//Buenos y regulares
+    if(registro.gasmq7 >= 0.5){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="100"){ //Solo buenos
+    if(registro.gasmq7<0.5){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="101"){ //Buenos y malos
+    if(registro.gasmq7 <0.5 || registro.gasmq7 >= 0.6){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="111"){//Incluir todos
+    doPush = true;
+  }
+}
+
+
+function getUVPush(uv,registro){
+  if(uv==="000"){ //Ninguno
+    doPush = false;
+  }else if(uv==="001"){ //Solo malos
+    if(registro.iuv <0.6){
+      doPush = false;
+    }
+  }else if(uv==="010"){ //Solo regulares
+    if(registro.iuv >=0.5 && registro.iuv <0.6){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="011"){//Buenos y regulares
+    if(registro.iuv >= 0.5){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="100"){ //Solo buenos
+    if(registro.iuv<0.5){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="101"){ //Buenos y malos
+    if(registro.iuv <0.5 || registro.iuv >= 0.6){
+      doPush = true;
+    }else{
+      doPush = false;
+    }
+  }else if(uv==="111"){//Incluir todos
+    doPush = true;
+  }
+}
 
 
 app.post('/data', function(req, res) {
