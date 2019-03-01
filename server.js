@@ -116,6 +116,7 @@ app.get('/data', function (req, res) {
     var uv = req.param("uvi");
     var mq7 = req.param("gasmq7");
     var mq135 = req.param("mq135");
+    console.log(uv,mq7,mq135);
 
     db.collection("lecturas").find({}).toArray(function(err, result) {
       if (err) throw err;
@@ -126,7 +127,7 @@ app.get('/data', function (req, res) {
           doPush = getUVPush(uv,registro);
         }
         if(mq7!=="" && doPush){
-          doPush = getmq7push(mq7,registro);
+          doPush = getmq7Push(mq7,registro);
         }
         if(mq135!=="" && doPush){
           doPush = getmq135Push(mq135,registro);
@@ -135,7 +136,6 @@ app.get('/data', function (req, res) {
           resultado.push(registro);
         }
       });
-      
       res.send(JSON.stringify(resultado));
     });
   } else {
