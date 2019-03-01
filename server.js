@@ -129,7 +129,7 @@ app.get('/data', function (req, res) {
       dfrom = new Date(datef.toISOString());
     }
 
-    if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
+    if(dateto && typeof dateto !=="undefined" && dateto!==""){
       var yeart = dateto.substring(0,4);
       var montht = dateto.substring(4,6);
       var dayt = dateto.substring(6);
@@ -146,6 +146,7 @@ app.get('/data', function (req, res) {
       query.fechahora = {"$lte":dto};      
     }
 
+    console.log(JSON.stringify(query))
 
     db.collection("lecturas").find(query).toArray(function(err, result) {
       if (err) throw err;
