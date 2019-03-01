@@ -119,17 +119,17 @@ app.get('/data', function (req, res) {
     var datefrom = req.param("dateFrom");
     var dateto = req.param("dateTo");
     if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
-      var yearf = datefrom.substring(0,3);
-      var monthf = datefrom.substring(4,7);
-      var dayf = datefrom.substring(8);
+      var yearf = datefrom.substring(0,4);
+      var monthf = datefrom.substring(4,6);
+      var dayf = datefrom.substring(6);
       var datef = yearf + "-" + monthf + "-" + dayf;
       console.log(datef)
     }
 
     if(datefrom && typeof datefrom !=="undefined" && datefrom!==""){
-      var yeart = dateto.substring(0,3);
-      var montht = dateto.substring(4,7);
-      var dayt = dateto.substring(8);
+      var yeart = dateto.substring(0,4);
+      var montht = dateto.substring(4,6);
+      var dayt = dateto.substring(6);
       var datet = yeart + "-" + montht + "-" + dayt;
     }
     db.collection("lecturas").find({}).toArray(function(err, result) {
