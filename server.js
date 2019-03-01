@@ -182,6 +182,7 @@ function getmq135Push(uv,registro){
   }else if(uv==="111"){//Incluir todos
     doPush = true;
   }
+  return doPush;
 }
 
 function getmq7Push(uv,registro){
@@ -218,6 +219,7 @@ function getmq7Push(uv,registro){
   }else if(uv==="111"){//Incluir todos
     doPush = true;
   }
+  return doPush;
 }
 
 
@@ -255,6 +257,7 @@ function getUVPush(uv,registro){
   }else if(uv==="111"){//Incluir todos
     doPush = true;
   }
+  return doPush;
 }
 
 
