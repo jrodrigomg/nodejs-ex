@@ -122,7 +122,6 @@ app.get('/data', function (req, res) {
       if (err) throw err;
       var resultado = [];
       result.forEach(function(registro){
-        console.log(registro);
         var doPush = true;
         if(uv!==""){
           doPush = getUVPush(uv,registro);
@@ -152,29 +151,29 @@ function getmq135Push(uv,registro){
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
-    if(registro.gasmq135 <0.6){
+    if(registro.gasmq7 <2){
       doPush = false;
     }
   }else if(uv==="010"){ //Solo regulares
-    if(registro.gasmq135 >=0.5 && registro.gasmq135 <0.6){
+    if(registro.gasmq7 >=1 && registro.gasmq7 <2){
       doPush = true;
     }else{
       doPush = false;
     }
-  }else if(uv==="011"){//Buenos y regulares
-    if(registro.gasmq135 >= 0.5){
+  }else if(uv==="011"){//malos y regulares
+    if(registro.gasmq7 >= 1){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="100"){ //Solo buenos
-    if(registro.gasmq135<0.5){
+    if(registro.gasmq7<1){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="101"){ //Buenos y malos
-    if(registro.gasmq135 <0.5 || registro.gasmq135 >= 0.6){
+    if(registro.gasmq7 <1 || registro.gasmq7 >=2){
       doPush = true;
     }else{
       doPush = false;
@@ -185,33 +184,34 @@ function getmq135Push(uv,registro){
   return doPush;
 }
 
+
 function getmq7Push(uv,registro){
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
-    if(registro.gasmq7 <0.6){
+    if(registro.gasmq7 <2){
       doPush = false;
     }
   }else if(uv==="010"){ //Solo regulares
-    if(registro.gasmq7 >=0.5 && registro.gasmq7 <0.6){
+    if(registro.gasmq7 >=1 && registro.gasmq7 <2){
       doPush = true;
     }else{
       doPush = false;
     }
-  }else if(uv==="011"){//Buenos y regulares
-    if(registro.gasmq7 >= 0.5){
+  }else if(uv==="011"){//malos y regulares
+    if(registro.gasmq7 >= 1){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="100"){ //Solo buenos
-    if(registro.gasmq7<0.5){
+    if(registro.gasmq7<1){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="101"){ //Buenos y malos
-    if(registro.gasmq7 <0.5 || registro.gasmq7 >= 0.6){
+    if(registro.gasmq7 <1 || registro.gasmq7 >=2){
       doPush = true;
     }else{
       doPush = false;
@@ -227,29 +227,29 @@ function getUVPush(uv,registro){
   if(uv==="000"){ //Ninguno
     doPush = false;
   }else if(uv==="001"){ //Solo malos
-    if(registro.iuv <0.6){
+    if(registro.iuv <20){
       doPush = false;
     }
   }else if(uv==="010"){ //Solo regulares
-    if(registro.iuv >=0.5 && registro.iuv <0.6){
+    if(registro.iuv >=10 && registro.iuv <20){
       doPush = true;
     }else{
       doPush = false;
     }
-  }else if(uv==="011"){//Buenos y regulares
-    if(registro.iuv >= 0.5){
+  }else if(uv==="011"){//malos y regulares
+    if(registro.iuv >= 10){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="100"){ //Solo buenos
-    if(registro.iuv<0.5){
+    if(registro.iuv<10){
       doPush = true;
     }else{
       doPush = false;
     }
   }else if(uv==="101"){ //Buenos y malos
-    if(registro.iuv <0.5 || registro.iuv >= 0.6){
+    if(registro.iuv <10|| registro.iuv >= 20){
       doPush = true;
     }else{
       doPush = false;
