@@ -137,11 +137,13 @@ app.get('/data', function (req, res) {
       dto = new Date(datet.toISOString());
     }
     if(dfrom!="" && dto!=""){
+      console.log(dfrom);
+      console.log(dto);
       query.fechahora = {"$gte":dfrom,"$lte":dto};
     }else if(dfrom!=""){
       query.fechahora = {"$gte":dfrom};
     }else if(dto !=""){
-      query.fechahora = {"$lte":dtos};      
+      query.fechahora = {"$lte":dto};      
     }
 
 
